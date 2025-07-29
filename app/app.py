@@ -1,7 +1,7 @@
 
 import streamlit as st
-from app.utils.file_utils import read_transcript
-from app.utils.llm_utils import summarize_transcript, extract_action_items
+from utils.file_utils import read_transcript
+from utils.llm_utils import summarize_transcript, extract_action_items
 
 st.set_page_config(page_title="AI Meeting Summary Generator", layout="wide")
 
