@@ -1,16 +1,25 @@
+import openai
+import os
 
-# Simulated GPT-4o behavior for summarization and action extraction
+openai.api_key = os.environ.get("OPENAI_API_KEY")
+
 def summarize_transcript(transcript: str) -> str:
-    return (
-        "The team agreed to launch the product on August 15. "
-        "Marketing and dev teams will finalize tasks by July 31. "
-        "Open questions around pricing remain."
+    response = openai.ChatCompletion.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": "You are an expert product manager assistant that summarizes meeting transcripts into a concise executive summary."},
+            {"role": "user", "content": f"Summarize the following meeting transcript:\n\n{transcript}"}
+        ]
     )
+    return response.choices[0].message.content.strip()
 
 def extract_action_items(transcript: str) -> list:
-    return [
-        "Confirm final launch date with all stakeholders.",
-        "Dev team to complete integration by July 31.",
-        "Marketing to prepare launch assets by August 5.",
-        "Product team to finalize pricing strategy."
-    ]
+    response = openai.ChatCompletion.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant that extracts actionable items from meeting transcripts. Respond with a bullet list of clear action items."},
+            {"role": "user", "content": f"Extract all action items from the following meeting transcript:\n\n{transcript}"}
+        ]
+    )
+    items = response.choices[0].message.content.strip()
+    return [item.strip("-• ") for item in items.splitlines() if item.strip()]
