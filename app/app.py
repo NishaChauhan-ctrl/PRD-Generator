@@ -37,4 +37,20 @@ if generate_gpt:
                 st.write(output)
 
 # Example PRD View for Screenshot
-elif show_demo:_
+elif show_demo:
+    st.success("📸 Example PRD Loaded (Simulated for screenshot/demo)")
+
+    example_prd = {
+        "Document Objective": "This document outlines the requirements for the Smart Meeting Scheduler, an AI-powered tool that streamlines scheduling for remote and hybrid teams by offering intelligent time slot suggestions and calendar integration.",
+        "Market Problem": "Remote teams spend hours coordinating meetings manually. Current tools lack intelligent recommendations and fail to resolve time conflicts across time zones effectively.",
+        "Market Opportunity": "The collaboration software market is growing at over 10% annually. There is a rising demand for smart productivity tools that reduce friction and automate repetitive tasks like scheduling.",
+        "Product Features": "- Google Calendar Integration\n- AI-driven Time Slot Suggestions\n- Smart Reminders\n- Privacy-first, no data retention\n- Simple UI for non-technical users",
+        "Success Metrics": "- 60%+ users report time saved\n- 3+ real meetings scheduled per pilot team\n- Positive NPS and feedback from launch users"
+    }
+
+    for title in example_prd:
+        st.markdown(f"### ✅ {title.upper()}")
+        st.write(example_prd[title])
+
+# Export (coming soon)
+st.download_button("📥 Download PRD (Coming Soon)", "PRD content will go here.", file_name="SmartMeetingScheduler_PRD.txt")
