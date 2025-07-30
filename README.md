@@ -31,9 +31,10 @@ This tool helps product managers and early-stage teams save time by automating d
 ## Getting Started
 Clone the repo and run the app locally:
 
-#Demo link for streamlit
+#Demo link for Streamlit
+- Use the MRD docx for example generation.
 https://prd-generator-vwvgul5avrym3a2wyqkyiz.streamlit.app/
-Use the MRD docx for example generation.
+
 
 ```bash
 git clone https://github.com/yourusername/prd-generator
