@@ -3,52 +3,55 @@ from utils.file_utils import extract_text_from_file
 from utils.llm_utils import generate_prd_section
 
 st.set_page_config(page_title="AI PRD Generator", layout="wide")
-
 st.title("📄 AI PRD Generator")
-st.markdown("Upload an MRD and generate structured PRD sections using GPT.")
 
-# Input fields
-product_name = st.text_input("What type of product is this PRD for?", "Smart Meeting Scheduler")
-mrd_file = st.file_uploader("Upload MRD File", type=["txt", "pdf", "docx"])
-additional_context = st.text_area("Additional Context (optional)", height=100)
+# Product name and context
+product_name = st.text_input("Product Name", "Smart Meeting Scheduler")
+mrd_file = st.file_uploader("Upload MRD", type=["txt", "pdf", "docx"])
+additional_context = st.text_area("Optional Notes or Context", height=100)
 
-if st.button("🚀 Generate PRD"):
+# Buttons
+col1, col2 = st.columns(2)
+generate_gpt = col1.button("🚀 Generate PRD with GPT")
+show_demo = col2.button("📸 Show Example PRD")
+
+if generate_gpt:
     if not mrd_file:
-        st.warning("Please upload an MRD file to proceed.")
+        st.warning("Please upload an MRD to continue.")
     else:
-        with st.spinner("Reading and analyzing your MRD..."):
+        with st.spinner("Reading MRD..."):
             mrd_text = extract_text_from_file(mrd_file)
             full_context = mrd_text + "\n\n" + additional_context
 
-        # 1. Document Objective
-        st.markdown("### ✅ 1.1 DOCUMENT OBJECTIVE")
-        with st.spinner("Generating section..."):
-            objective = generate_prd_section("Document Objective", full_context, product_name)
-            st.write(objective)
+        for title in [
+            "Document Objective",
+            "Market Problem",
+            "Market Opportunity",
+            "Product Features",
+            "Success Metrics"
+        ]:
+            st.markdown(f"### ✅ {title.upper()}")
+            with st.spinner(f"Generating {title}..."):
+                output = generate_prd_section(title, full_context, product_name)
+                st.write(output)
 
-        # 2. Market Problem
-        st.markdown("### ✅ 1.2 MARKET PROBLEM")
-        with st.spinner("Generating section..."):
-            problem = generate_prd_section("Market Problem", full_context, product_name)
-            st.write(problem)
+elif show_demo:
+    st.success("📸 Example PRD Loaded (Simulated for screenshot/demo)")
+    demo_context = """
+The Smart Meeting Scheduler helps distributed teams eliminate manual calendar coordination through AI-powered scheduling.
+It integrates with Google Calendar, recommends optimal times, and sends smart invites and reminders.
+"""
 
-        # 3. Market Opportunity
-        st.markdown("### ✅ 1.3 MARKET OPPORTUNITY")
-        with st.spinner("Generating section..."):
-            opportunity = generate_prd_section("Market Opportunity", full_context, product_name)
-            st.write(opportunity)
+    for title in [
+        "Document Objective",
+        "Market Problem",
+        "Market Opportunity",
+        "Product Features",
+        "Success Metrics"
+    ]:
+        st.markdown(f"### ✅ {title.upper()}")
+        simulated = generate_prd_section(title, demo_context, product_name)
+        st.write(simulated)
 
-        # 4. Product Features
-        st.markdown("### ✅ 1.4 PRODUCT FEATURES")
-        with st.spinner("Generating section..."):
-            features = generate_prd_section("Product Features", full_context, product_name)
-            st.write(features)
-
-        # 5. Success Metrics
-        st.markdown("### ✅ 1.5 SUCCESS METRICS")
-        with st.spinner("Generating section..."):
-            metrics = generate_prd_section("Success Metrics", full_context, product_name)
-            st.write(metrics)
-
-        # Download Placeholder
-        st.download_button("📥 Download PRD (Coming Soon)", "Full PRD content will be here.", file_name="SmartMeetingScheduler_PRD.txt")
+# Optional export
+st.download_button("📥 Download PRD (Coming Soon)", "PRD content will go here.", file_name="SmartMeetingScheduler_PRD.txt")
