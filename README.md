@@ -33,6 +33,7 @@ Clone the repo and run the app locally:
 
 #Demo link for streamlit
 https://prd-generator-vwvgul5avrym3a2wyqkyiz.streamlit.app/
+Use the MRD docx for example generation.
 
 ```bash
 git clone https://github.com/yourusername/prd-generator
