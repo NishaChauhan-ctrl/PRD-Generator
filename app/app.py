@@ -5,7 +5,7 @@ from utils.llm_utils import generate_prd_section
 st.set_page_config(page_title="AI PRD Generator", layout="wide")
 st.title("📄 AI PRD Generator")
 
-# Product name and context
+# Inputs
 product_name = st.text_input("Product Name", "Smart Meeting Scheduler")
 mrd_file = st.file_uploader("Upload MRD", type=["txt", "pdf", "docx"])
 additional_context = st.text_area("Optional Notes or Context", height=100)
@@ -15,6 +15,7 @@ col1, col2 = st.columns(2)
 generate_gpt = col1.button("🚀 Generate PRD with GPT")
 show_demo = col2.button("📸 Show Example PRD")
 
+# GPT-Powered Generation
 if generate_gpt:
     if not mrd_file:
         st.warning("Please upload an MRD to continue.")
@@ -35,23 +36,5 @@ if generate_gpt:
                 output = generate_prd_section(title, full_context, product_name)
                 st.write(output)
 
-elif show_demo:
-    st.success("📸 Example PRD Loaded (Simulated for screenshot/demo)")
-    demo_context = """
-The Smart Meeting Scheduler helps distributed teams eliminate manual calendar coordination through AI-powered scheduling.
-It integrates with Google Calendar, recommends optimal times, and sends smart invites and reminders.
-"""
-
-    for title in [
-        "Document Objective",
-        "Market Problem",
-        "Market Opportunity",
-        "Product Features",
-        "Success Metrics"
-    ]:
-        st.markdown(f"### ✅ {title.upper()}")
-        simulated = generate_prd_section(title, demo_context, product_name)
-        st.write(simulated)
-
-# Optional export
-st.download_button("📥 Download PRD (Coming Soon)", "PRD content will go here.", file_name="SmartMeetingScheduler_PRD.txt")
+# Example PRD View for Screenshot
+elif show_demo:_
