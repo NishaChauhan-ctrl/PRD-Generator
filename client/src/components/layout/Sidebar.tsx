@@ -38,75 +38,63 @@ export function Sidebar() {
       </div>
 
       <div className="flex-1 py-6 px-3 space-y-6 overflow-y-auto">
-        
-        {/* Main Dashboard Link */}
         <div className="px-3">
-          <Link href="/">
-            <a className={cn(
-              "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-all duration-200 group font-medium",
-              location === "/" 
-                ? "bg-sidebar-accent text-primary border-l-2 border-primary" 
-                : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
-            )}>
-              <LayoutDashboard size={16} />
-              <span>Dashboard</span>
-            </a>
+          <Link href="/" className={cn(
+            "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-all duration-200 group font-medium",
+            location === "/" 
+              ? "bg-sidebar-accent text-primary border-l-2 border-primary" 
+              : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+          )}>
+            <LayoutDashboard size={16} />
+            <span>Dashboard</span>
           </Link>
         </div>
 
-        {/* AI Tools Section */}
         <div>
           <div className="px-3 mb-2 flex items-center justify-between">
             <span className="text-xs font-mono text-sidebar-foreground/40 uppercase tracking-widest">AI Tools</span>
           </div>
           <div className="space-y-1">
             {mainTools.map((item) => (
-              <Link key={item.href} href={item.href}>
-                <a className={cn(
-                  "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-all duration-200 group",
-                  location === item.href 
-                    ? "bg-sidebar-accent text-primary border-l-2 border-primary" 
-                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
-                )}>
-                  <item.icon size={16} className={cn(
-                    "transition-colors",
-                    location === item.href ? "text-primary" : "text-sidebar-foreground/50 group-hover:text-sidebar-foreground/80"
-                  )} />
-                  <span className="font-medium">{item.label}</span>
-                </a>
+              <Link key={item.href} href={item.href} className={cn(
+                "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-all duration-200 group",
+                location === item.href 
+                  ? "bg-sidebar-accent text-primary border-l-2 border-primary" 
+                  : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+              )}>
+                <item.icon size={16} className={cn(
+                  "transition-colors",
+                  location === item.href ? "text-primary" : "text-sidebar-foreground/50 group-hover:text-sidebar-foreground/80"
+                )} />
+                <span className="font-medium">{item.label}</span>
               </Link>
             ))}
           </div>
         </div>
 
-        {/* Library Section */}
         <div>
-           <div className="px-3 mb-2 flex items-center justify-between">
+          <div className="px-3 mb-2 flex items-center justify-between">
             <span className="text-xs font-mono text-sidebar-foreground/40 uppercase tracking-widest">Library</span>
             <button className="text-sidebar-foreground/40 hover:text-primary transition-colors">
               <Plus size={12} />
             </button>
           </div>
-           <div className="space-y-1">
-             <Link href="/library/prds">
-                <a className={cn(
-                  "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-all duration-200 group text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
-                  location === "/library/prds" && "bg-sidebar-accent text-primary"
-                )}>
-                  <FileText size={16} className="opacity-50" />
-                  <span>Saved PRDs</span>
-                </a>
-             </Link>
-             <Link href="/library/templates">
-                <a className={cn(
-                  "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-all duration-200 group text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
-                  location === "/library/templates" && "bg-sidebar-accent text-primary"
-                )}>
-                  <Settings size={16} className="opacity-50" />
-                  <span>Templates</span>
-                </a>
-             </Link>
-           </div>
+          <div className="space-y-1">
+            <Link href="/library/prds" className={cn(
+              "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-all duration-200 group text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
+              location === "/library/prds" && "bg-sidebar-accent text-primary"
+            )}>
+              <FileText size={16} className="opacity-50" />
+              <span>Saved PRDs</span>
+            </Link>
+            <Link href="/library/templates" className={cn(
+              "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-all duration-200 group text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
+              location === "/library/templates" && "bg-sidebar-accent text-primary"
+            )}>
+              <Settings size={16} className="opacity-50" />
+              <span>Templates</span>
+            </Link>
+          </div>
         </div>
       </div>
 
