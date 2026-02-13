@@ -1,11 +1,37 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Card } from "@/components/ui/card";
-import { Sparkles, Loader2, Copy, Check, AlertCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { 
+  Sparkles, Loader2, Copy, Check, AlertCircle, Upload, Lightbulb,
+  FileDown, Pencil, Link2, LayoutTemplate, CheckCircle2, ArrowRight, FileText, X
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "wouter";
+import { useQuery } from "@tanstack/react-query";
+
+interface Template {
+  icon: string;
+  title: string;
+  description: string;
+  idea: string;
+}
+
+interface ToolLayoutProps {
+  title: string;
+  description: string;
+  placeholder: string;
+  actionLabel?: string;
+  apiEndpoint: string;
+  isPrd?: boolean;
+  inputLabel?: string;
+  templates?: Template[];
+  inspirations?: string[];
+  resultsLabel?: string;
+  resultsHref?: string;
+  resultsCountEndpoint?: string;
+}
 
 export function ToolLayout({ 
   title, 
@@ -14,20 +40,26 @@ export function ToolLayout({
   actionLabel = "Generate",
   apiEndpoint,
   isPrd = false,
-}: { 
-  title: string; 
-  description: string;
-  placeholder: string;
-  actionLabel?: string;
-  apiEndpoint: string;
-  isPrd?: boolean;
-}) {
+  inputLabel = "Your Input",
+  templates = [],
+  inspirations = [],
+  resultsLabel,
+  resultsHref,
+  resultsCountEndpoint,
+}: ToolLayoutProps) {
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
+  const [uploadedFile, setUploadedFile] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+
+  const { data: resultsCount } = useQuery<any[]>({
+    queryKey: [resultsCountEndpoint || (isPrd ? "/api/prds" : "/api/tool-results")],
+    enabled: true,
+  });
 
   const handleGenerate = async () => {
     if (!input.trim()) return;
@@ -61,93 +93,228 @@ export function ToolLayout({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  return (
-    <div className="max-w-5xl mx-auto p-8 h-full flex flex-col">
-      <div className="mb-8">
-        <h1 className="text-3xl font-heading font-bold mb-2">{title}</h1>
-        <p className="text-muted-foreground text-lg">{description}</p>
-      </div>
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target?.result as string;
+      setInput((prev) => prev ? prev + "\n\n" + text : text);
+      setUploadedFile(file.name);
+      toast({ title: `Loaded "${file.name}"` });
+    };
+    reader.readAsText(file);
+  };
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 min-h-0">
-        <div className="flex flex-col gap-4">
-          <Card className="flex-1 p-6 bg-card/50 border-border/50 backdrop-blur-sm flex flex-col">
-            <h3 className="font-semibold mb-4 flex items-center gap-2">
-              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-xs border border-primary/20">1</span>
-              Define your input
-            </h3>
-            <Textarea 
-              data-testid="input-tool-text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder={placeholder}
-              className="flex-1 bg-background/50 resize-none border-border/50 focus:border-primary/50 font-mono text-sm"
-            />
-            {error && (
-              <div className="mt-3 p-3 rounded bg-destructive/10 border border-destructive/20 text-destructive text-sm flex items-start gap-2">
-                <AlertCircle size={16} className="mt-0.5 flex-shrink-0" />
-                <span>{error}</span>
-              </div>
-            )}
-            <div className="mt-4 flex justify-end">
-              <Button 
-                data-testid="button-generate"
-                onClick={handleGenerate} 
-                disabled={isGenerating || !input.trim()}
-                className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
-              >
-                {isGenerating ? <Loader2 className="animate-spin" size={16} /> : <Sparkles size={16} />}
-                {isGenerating ? "Generating..." : actionLabel}
-              </Button>
-            </div>
-          </Card>
+  const clearUpload = () => {
+    setUploadedFile(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const features = [
+    { icon: FileDown, label: "Export as PDF or Markdown" },
+    { icon: Pencil, label: "Inline editing with version history" },
+    { icon: Link2, label: "Shareable links" },
+    { icon: LayoutTemplate, label: "Custom templates" },
+  ];
+
+  if (result) {
+    return (
+      <div className="max-w-4xl mx-auto p-8 space-y-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-heading font-bold">{title} Result</h1>
+          <div className="flex items-center gap-2">
+            <Button
+              data-testid="button-copy"
+              variant="outline"
+              size="sm"
+              onClick={copyToClipboard}
+              className="gap-2"
+            >
+              {copied ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
+              {copied ? "Copied" : "Copy"}
+            </Button>
+            <Button
+              data-testid="button-new"
+              variant="outline"
+              size="sm"
+              onClick={() => { setResult(""); setInput(""); setUploadedFile(null); }}
+              className="gap-2"
+            >
+              <Sparkles size={14} />
+              New
+            </Button>
+          </div>
         </div>
 
-        <div className="flex flex-col gap-4 h-full min-h-[400px]">
-          <Card className="flex-1 p-6 bg-card/50 border-border/50 backdrop-blur-sm flex flex-col relative overflow-hidden">
-            <h3 className="font-semibold mb-4 flex items-center gap-2 justify-between">
-              <div className="flex items-center gap-2">
-                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-accent/10 text-accent text-xs border border-accent/20">2</span>
-                <span>AI Result</span>
-              </div>
-              {result && (
-                <Button data-testid="button-copy" variant="ghost" size="sm" onClick={copyToClipboard} className="h-8 w-8 p-0">
-                  {copied ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
-                </Button>
-              )}
-            </h3>
+        <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+          <div className="prose prose-sm max-w-none dark:prose-invert whitespace-pre-wrap font-mono text-sm leading-relaxed" data-testid="text-result">
+            {result}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-            <div className="flex-1 overflow-auto rounded-md bg-background/50 p-4 border border-border/30 relative">
-              {result ? (
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="prose prose-invert prose-sm max-w-none font-mono whitespace-pre-wrap"
-                  data-testid="text-result"
-                >
-                  {result}
-                </motion.div>
-              ) : (
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground/40">
-                  {isGenerating ? (
-                    <motion.div 
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="text-center"
-                    >
-                      <Loader2 className="w-8 h-8 animate-spin mx-auto mb-2 text-primary" />
-                      <p className="text-xs font-mono">Synthesizing intelligence...</p>
-                      <p className="text-[10px] font-mono mt-1 opacity-60">This may take 10-15 seconds</p>
-                    </motion.div>
-                  ) : (
-                    <>
-                      <Sparkles className="w-12 h-12 mb-2 opacity-20" />
-                      <p className="text-sm">Ready to generate</p>
-                    </>
-                  )}
+  return (
+    <div className="max-w-4xl mx-auto p-8 space-y-8 overflow-auto">
+      {templates.length > 0 && (
+        <div>
+          <h2 className="text-lg font-heading font-semibold mb-4 text-center">Start with a Template</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {templates.map((tpl, i) => (
+              <button
+                key={i}
+                data-testid={`button-template-${i}`}
+                onClick={() => setInput(tpl.idea)}
+                className="flex items-start gap-3 p-4 rounded-xl border border-border bg-card hover:border-primary/50 hover:shadow-md transition-all text-left group"
+              >
+                <span className="text-2xl mt-0.5">{tpl.icon}</span>
+                <div className="min-w-0">
+                  <p className="font-semibold text-sm">{tpl.title}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{tpl.description}</p>
                 </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="space-y-4">
+        <div className="flex items-start gap-3">
+          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0 mt-0.5">
+            <Lightbulb size={16} />
+          </div>
+          <div>
+            <h2 className="text-xl font-heading font-bold">{title}</h2>
+            <p className="text-sm text-muted-foreground mt-1">{description}</p>
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <label className="text-sm font-medium text-primary">{inputLabel}</label>
+            <div className="flex items-center gap-2">
+              {uploadedFile && (
+                <span className="text-xs text-muted-foreground flex items-center gap-1 bg-muted px-2 py-1 rounded-md">
+                  <FileText size={12} />
+                  {uploadedFile}
+                  <button data-testid="button-clear-upload" onClick={clearUpload} className="ml-1 hover:text-foreground"><X size={12} /></button>
+                </span>
               )}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".txt,.md,.csv,.json,.doc,.docx"
+                onChange={handleFileUpload}
+                className="hidden"
+              />
+              <Button
+                data-testid="button-upload"
+                variant="ghost"
+                size="sm"
+                onClick={() => fileInputRef.current?.click()}
+                className="gap-1.5 text-xs text-muted-foreground hover:text-foreground"
+              >
+                <Upload size={14} />
+                Upload Doc
+              </Button>
             </div>
-          </Card>
+          </div>
+          <Textarea 
+            data-testid="input-tool-text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={placeholder}
+            className="min-h-[140px] bg-card resize-none border-border focus:border-primary/50 text-sm"
+          />
+        </div>
+
+        {error && (
+          <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm flex items-start gap-2">
+            <AlertCircle size={16} className="mt-0.5 flex-shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
+
+        <Button 
+          data-testid="button-generate"
+          onClick={handleGenerate} 
+          disabled={isGenerating || !input.trim()}
+          className="w-full gap-2 h-12 text-base font-semibold rounded-xl"
+        >
+          {isGenerating ? <Loader2 className="animate-spin" size={18} /> : <Sparkles size={18} />}
+          {isGenerating ? "Generating..." : actionLabel}
+        </Button>
+
+        <AnimatePresence>
+          {isGenerating && (
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="text-center py-8"
+            >
+              <Loader2 className="w-8 h-8 animate-spin mx-auto mb-3 text-primary" />
+              <p className="text-sm text-muted-foreground">Generating your content...</p>
+              <p className="text-xs text-muted-foreground/60 mt-1">This may take 10–15 seconds</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {inspirations.length > 0 && !isGenerating && (
+        <div className="space-y-3">
+          <p className="text-sm text-muted-foreground font-medium">Need inspiration? Try one of these:</p>
+          <div className="space-y-2">
+            {inspirations.map((idea, i) => (
+              <button
+                key={i}
+                data-testid={`button-inspiration-${i}`}
+                onClick={() => setInput(idea)}
+                className="w-full text-left p-3 rounded-lg border border-border bg-card/50 hover:border-primary/40 hover:bg-card transition-all text-sm text-muted-foreground hover:text-foreground"
+              >
+                {idea}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="flex justify-center">
+        <Link
+          href={resultsHref || (isPrd ? "/library/prds" : "/library/results")}
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border bg-card hover:border-primary/40 transition-all text-sm font-medium"
+          data-testid="link-view-results"
+        >
+          <FileText size={16} />
+          {resultsLabel || (isPrd ? "View Your PRDs" : "View Tool Results")}
+          {resultsCount && resultsCount.length > 0 && (
+            <span className="text-muted-foreground">({resultsCount.length})</span>
+          )}
+          <ArrowRight size={14} />
+        </Link>
+      </div>
+
+      <div className="border-t border-border pt-8 space-y-6">
+        <div className="text-center">
+          <h3 className="text-lg font-heading font-bold">What You Can Do</h3>
+          <p className="text-sm text-muted-foreground mt-1">Recently shipped features</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {features.map((feat, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card/50"
+            >
+              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+                <feat.icon size={16} />
+              </div>
+              <span className="text-sm font-medium flex-1">{feat.label}</span>
+              <CheckCircle2 size={18} className="text-emerald-500 flex-shrink-0" />
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -9,65 +9,100 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* Dark Future / Command Center Palette */
-  /* Base - Deep Charcoal/Black */
-  --color-background: hsl(220 15% 6%); 
-  --color-foreground: hsl(220 10% 90%);
-
-  /* Cards - Slightly lighter than bg */
-  --color-card: hsl(220 15% 10%);
-  --color-card-foreground: hsl(220 10% 95%);
-
-  /* Popovers */
-  --color-popover: hsl(220 15% 8%);
-  --color-popover-foreground: hsl(220 10% 95%);
-
-  /* Primary - Electric Amber/Gold for "Intelligence" feel */
-  --color-primary: hsl(45 90% 55%);
-  --color-primary-foreground: hsl(220 20% 10%);
-
-  /* Secondary - Muted Blue/Grey for structural elements */
-  --color-secondary: hsl(220 15% 18%);
-  --color-secondary-foreground: hsl(220 10% 90%);
-
-  /* Muted */
-  --color-muted: hsl(220 15% 14%);
-  --color-muted-foreground: hsl(220 10% 60%);
-
-  /* Accent - Cyan for data/tech highlights */
-  --color-accent: hsl(180 80% 50%);
-  --color-accent-foreground: hsl(220 20% 10%);
-
-  /* Destructive */
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-fg);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-fg);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-fg);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-fg);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-fg);
+  --color-accent: var(--accent-c);
+  --color-accent-foreground: var(--accent-fg);
   --color-destructive: hsl(0 85% 60%);
   --color-destructive-foreground: hsl(0 0% 100%);
+  --color-border: var(--border-c);
+  --color-input: var(--input-c);
+  --color-ring: var(--ring-c);
 
-  /* Borders - Subtle and technical */
-  --color-border: hsl(220 15% 20%);
-  --color-input: hsl(220 15% 16%);
-  --color-ring: hsl(45 90% 55%);
-
-  /* Chart Colors */
-  --color-chart-1: hsl(45 90% 55%);
+  --color-chart-1: hsl(260 60% 55%);
   --color-chart-2: hsl(180 80% 50%);
   --color-chart-3: hsl(280 70% 60%);
   --color-chart-4: hsl(340 70% 60%);
   --color-chart-5: hsl(160 70% 50%);
 
-  --color-sidebar: hsl(220 15% 7%);
-  --color-sidebar-foreground: hsl(220 10% 90%);
-  --color-sidebar-primary: hsl(45 90% 55%);
-  --color-sidebar-primary-foreground: hsl(220 20% 10%);
-  --color-sidebar-accent: hsl(220 15% 18%);
-  --color-sidebar-accent-foreground: hsl(220 10% 95%);
-  --color-sidebar-border: hsl(220 15% 14%);
-  --color-sidebar-ring: hsl(45 90% 55%);
+  --color-sidebar: var(--sidebar-bg);
+  --color-sidebar-foreground: var(--sidebar-fg);
+  --color-sidebar-primary: var(--sidebar-primary-c);
+  --color-sidebar-primary-foreground: hsl(0 0% 100%);
+  --color-sidebar-accent: var(--sidebar-accent-c);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-fg);
+  --color-sidebar-border: var(--sidebar-border-c);
+  --color-sidebar-ring: hsl(260 60% 55%);
 
   --font-sans: 'Inter', sans-serif;
   --font-heading: 'Space Grotesk', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  --radius: 0.25rem; /* Sharp, technical corners */
+  --radius: 0.5rem;
+}
+
+:root {
+  --bg: hsl(0 0% 100%);
+  --fg: hsl(220 15% 15%);
+  --card: hsl(0 0% 100%);
+  --card-fg: hsl(220 15% 15%);
+  --popover: hsl(0 0% 100%);
+  --popover-fg: hsl(220 15% 15%);
+  --primary: hsl(260 60% 55%);
+  --primary-fg: hsl(0 0% 100%);
+  --secondary: hsl(240 5% 96%);
+  --secondary-fg: hsl(220 15% 20%);
+  --muted: hsl(240 5% 96%);
+  --muted-fg: hsl(220 10% 45%);
+  --accent-c: hsl(260 50% 96%);
+  --accent-fg: hsl(260 60% 45%);
+  --border-c: hsl(220 10% 90%);
+  --input-c: hsl(220 10% 90%);
+  --ring-c: hsl(260 60% 55%);
+
+  --sidebar-bg: hsl(240 5% 97%);
+  --sidebar-fg: hsl(220 15% 20%);
+  --sidebar-primary-c: hsl(260 60% 55%);
+  --sidebar-accent-c: hsl(260 50% 95%);
+  --sidebar-accent-fg: hsl(260 60% 40%);
+  --sidebar-border-c: hsl(220 10% 90%);
+}
+
+.dark {
+  --bg: hsl(220 15% 6%);
+  --fg: hsl(220 10% 90%);
+  --card: hsl(220 15% 10%);
+  --card-fg: hsl(220 10% 95%);
+  --popover: hsl(220 15% 8%);
+  --popover-fg: hsl(220 10% 95%);
+  --primary: hsl(260 60% 60%);
+  --primary-fg: hsl(0 0% 100%);
+  --secondary: hsl(220 15% 18%);
+  --secondary-fg: hsl(220 10% 90%);
+  --muted: hsl(220 15% 14%);
+  --muted-fg: hsl(220 10% 60%);
+  --accent-c: hsl(260 50% 20%);
+  --accent-fg: hsl(260 60% 80%);
+  --border-c: hsl(220 15% 20%);
+  --input-c: hsl(220 15% 16%);
+  --ring-c: hsl(260 60% 55%);
+
+  --sidebar-bg: hsl(220 15% 7%);
+  --sidebar-fg: hsl(220 10% 90%);
+  --sidebar-primary-c: hsl(260 60% 60%);
+  --sidebar-accent-c: hsl(220 15% 18%);
+  --sidebar-accent-fg: hsl(220 10% 95%);
+  --sidebar-border-c: hsl(220 15% 14%);
 }
 
 @layer base {
@@ -76,7 +111,6 @@
   }
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    background-image: radial-gradient(circle at 50% 0%, hsl(220 15% 12%) 0%, transparent 75%);
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading tracking-tight;
@@ -86,19 +120,5 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
-  }
-  .glass-panel {
-    @apply bg-card/80 backdrop-blur-md border border-white/5 shadow-xl;
-  }
-  .tech-border {
-    @apply border border-border/50 relative;
-  }
-  .tech-border::after {
-    content: '';
-    @apply absolute top-0 left-0 w-1 h-1 bg-primary/50;
-  }
-  .tech-border::before {
-    content: '';
-    @apply absolute bottom-0 right-0 w-1 h-1 bg-primary/50;
   }
 }
