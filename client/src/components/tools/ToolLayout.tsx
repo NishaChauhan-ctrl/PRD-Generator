@@ -99,7 +99,7 @@ export function ToolLayout({
 
     const ext = file.name.split(".").pop()?.toLowerCase();
 
-    if (ext === "docx" || ext === "doc") {
+    if (ext === "docx" || ext === "doc" || ext === "pdf") {
       try {
         const formData = new FormData();
         formData.append("file", file);
@@ -226,7 +226,7 @@ export function ToolLayout({
               <input
                 ref={fileInputRef}
                 type="file"
-                accept=".txt,.md,.csv,.json,.doc,.docx"
+                accept=".txt,.md,.csv,.json,.doc,.docx,.pdf"
                 onChange={handleFileUpload}
                 className="hidden"
               />

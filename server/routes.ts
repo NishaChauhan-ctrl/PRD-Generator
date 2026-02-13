@@ -14,6 +14,7 @@ import {
 import { z } from "zod";
 import multer from "multer";
 import mammoth from "mammoth";
+import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
 
@@ -32,6 +33,19 @@ export async function registerRoutes(
       if (ext === "docx") {
         const result = await mammoth.extractRawText({ buffer: file.buffer });
         return res.json({ text: result.value });
+      }
+
+      if (ext === "pdf") {
+        const data = new Uint8Array(file.buffer);
+        const doc = await getDocument({ data, useSystemFonts: true }).promise;
+        const texts: string[] = [];
+        for (let i = 1; i <= doc.numPages; i++) {
+          const page = await doc.getPage(i);
+          const content = await page.getTextContent();
+          texts.push(content.items.map((item: any) => item.str).join(" "));
+        }
+        await doc.destroy();
+        return res.json({ text: texts.join("\n\n") });
       }
 
       if (ext === "doc") {
