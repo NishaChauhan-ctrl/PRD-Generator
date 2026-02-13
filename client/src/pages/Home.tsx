@@ -74,7 +74,7 @@ export function HomePage() {
       <div className="text-center max-w-2xl mx-auto mb-12">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-mono mb-4">
           <Sparkles size={12} />
-          <span>AI-POWERED PM TOOLKIT</span>
+          <span>SCOPECREEP — FINALLY, AN AI THAT EMBRACES THE INEVITABLE</span>
         </div>
         <h1 className="text-4xl font-heading font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/60">
           What would you like to build today?

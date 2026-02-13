@@ -32,8 +32,8 @@ export function Sidebar() {
           <Bot size={18} />
         </div>
         <div>
-          <h1 className="font-heading font-bold text-lg tracking-tight text-sidebar-foreground">IdeaForge</h1>
-          <p className="text-[10px] text-sidebar-foreground/50 font-mono tracking-wider">AI PM TOOLKIT</p>
+          <h1 className="font-heading font-bold text-lg tracking-tight text-sidebar-foreground">ScopeCreep</h1>
+          <p className="text-[10px] text-sidebar-foreground/50 font-mono tracking-wider leading-tight">Finally, an AI that embraces the inevitable</p>
         </div>
       </div>
 
