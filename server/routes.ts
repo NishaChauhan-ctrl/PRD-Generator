@@ -12,11 +12,39 @@ import {
   rewriteSection,
 } from "./openai";
 import { z } from "zod";
+import multer from "multer";
+import mammoth from "mammoth";
+
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+
+  app.post("/api/upload/extract-text", upload.single("file"), async (req, res) => {
+    try {
+      const file = req.file;
+      if (!file) return res.status(400).json({ error: "No file uploaded" });
+
+      const ext = file.originalname.split(".").pop()?.toLowerCase();
+
+      if (ext === "docx") {
+        const result = await mammoth.extractRawText({ buffer: file.buffer });
+        return res.json({ text: result.value });
+      }
+
+      if (ext === "doc") {
+        return res.status(400).json({ error: "Legacy .doc format is not supported. Please convert to .docx first." });
+      }
+
+      const text = file.buffer.toString("utf-8");
+      return res.json({ text });
+    } catch (err: any) {
+      console.error("File extraction error:", err);
+      res.status(500).json({ error: "Failed to extract text from file" });
+    }
+  });
 
   // --- PRD CRUD ---
   app.get("/api/prds", async (_req, res) => {

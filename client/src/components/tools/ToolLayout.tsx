@@ -93,18 +93,38 @@ export function ToolLayout({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const text = event.target?.result as string;
-      setInput((prev) => prev ? prev + "\n\n" + text : text);
-      setUploadedFile(file.name);
-      toast({ title: `Loaded "${file.name}"` });
-    };
-    reader.readAsText(file);
+
+    const ext = file.name.split(".").pop()?.toLowerCase();
+
+    if (ext === "docx" || ext === "doc") {
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        const res = await fetch("/api/upload/extract-text", { method: "POST", body: formData });
+        const data = await res.json();
+        if (!res.ok) {
+          toast({ title: data.error || "Failed to read document", variant: "destructive" });
+          return;
+        }
+        setInput((prev) => prev ? prev + "\n\n" + data.text : data.text);
+        setUploadedFile(file.name);
+        toast({ title: `Loaded "${file.name}"` });
+      } catch {
+        toast({ title: "Failed to upload document", variant: "destructive" });
+      }
+    } else {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const text = event.target?.result as string;
+        setInput((prev) => prev ? prev + "\n\n" + text : text);
+        setUploadedFile(file.name);
+        toast({ title: `Loaded "${file.name}"` });
+      };
+      reader.readAsText(file);
+    }
   };
 
   const clearUpload = () => {
