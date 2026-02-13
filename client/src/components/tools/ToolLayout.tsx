@@ -31,10 +31,14 @@ export function ToolLayout({
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    // Mock result (in real app, use onGenerate prop)
-    const mockResult = `## Generated Output for: ${title}\n\nBased on your input: "${input.substring(0, 50)}..."\n\n### Analysis\n- Clarity: High\n- Feasibility: Moderate\n- Impact: Significant\n\n### Recommendations\n1. Consider focusing on the core user loop first.\n2. Add specific metrics for retention.\n3. Validate the assumption about user behavior.\n\n### Next Steps\n- Create a prototype\n- Run 5 user interviews`;
+    if (onGenerate) {
+      const generatedResult = await onGenerate(input);
+      setResult(generatedResult);
+    } else {
+      // Fallback mock (should ideally be provided by parent)
+       setResult("No generator function provided.");
+    }
     
-    setResult(mockResult);
     setIsGenerating(false);
   };
 
