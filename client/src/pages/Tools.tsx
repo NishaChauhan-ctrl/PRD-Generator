@@ -11,13 +11,13 @@ export function PRDGenerator() {
       isPrd={true}
       inputLabel="Your Product Idea"
       templates={[
-        { icon: "☁️", title: "SaaS Product", description: "A project management SaaS platform for small design agencies that helps them...", idea: "A project management SaaS platform for small design agencies that helps them track client projects, manage feedback rounds, and handle invoicing in one place" },
-        { icon: "📱", title: "Mobile App", description: "A mobile fitness app that creates personalized workout plans based on...", idea: "A mobile fitness app that creates personalized workout plans based on user goals, available equipment, and time constraints, with progress tracking and social features" },
+        { icon: "🧠", title: "AI Assistant", description: "An AI-powered personal productivity assistant that learns your work habits and...", idea: "An AI-powered personal productivity assistant that learns your work habits, auto-prioritizes tasks, blocks distracting websites during focus time, and suggests optimal meeting schedules based on energy levels" },
+        { icon: "🌱", title: "Sustainability Tracker", description: "A carbon footprint tracking app for households that gamifies eco-friendly...", idea: "A carbon footprint tracking app for households that gamifies eco-friendly choices, tracks energy usage from smart home devices, suggests greener alternatives for daily purchases, and lets neighborhoods compete on sustainability goals" },
       ]}
       inspirations={[
-        "A mobile app that helps remote teams stay connected through virtual coffee breaks",
-        "An AI tool that analyzes customer support tickets to identify recurring issues",
-        "A platform that connects freelance designers with startups for short-term projects",
+        "A peer-to-peer skill exchange platform where professionals trade expertise instead of paying for coaching",
+        "An AI-powered meal planning app that generates grocery lists based on dietary restrictions, budget, and local store deals",
+        "A neighborhood safety app that crowdsources real-time alerts about road closures, outages, and local incidents",
       ]}
     />
   );
@@ -33,13 +33,13 @@ export function UserStories() {
       apiEndpoint="/api/tools/user-stories/generate"
       inputLabel="Your Feature List"
       templates={[
-        { icon: "🛒", title: "E-commerce", description: "Shopping cart, checkout flow, product reviews, and wishlists...", idea: "Shopping cart with multi-item support, guest checkout, Stripe payments, product reviews with photos, and wishlist functionality" },
-        { icon: "💬", title: "Chat App", description: "Real-time messaging, group chats, file sharing, and notifications...", idea: "Real-time messaging with read receipts, group chats up to 50 people, file and image sharing, push notifications, and message search" },
+        { icon: "🎮", title: "Gaming Community", description: "Tournament brackets, live streaming integration, team formation, and leaderboards...", idea: "Tournament bracket creation with seeding, Twitch/YouTube live stream embedding, team formation with role matching, global and regional leaderboards, in-app voice chat during matches" },
+        { icon: "🏋️", title: "Fitness Platform", description: "Workout builder, progress photos, trainer marketplace, wearable sync...", idea: "Custom workout builder with video demos, progress photo comparison timeline, trainer marketplace with booking and reviews, Apple Watch and Fitbit sync, social workout challenges" },
       ]}
       inspirations={[
-        "User onboarding flow with email verification, profile setup, and tutorial walkthrough",
-        "Dashboard with real-time analytics, custom date ranges, and exportable reports",
-        "Multi-tenant system with role-based access control and team management",
+        "AI-powered resume builder with job description matching, keyword optimization, and ATS score prediction",
+        "Event ticketing system with seat selection, dynamic pricing, QR code entry, and post-event surveys",
+        "Pet care platform with vet appointment booking, vaccination reminders, diet tracking, and lost pet alerts",
       ]}
     />
   );
@@ -55,13 +55,13 @@ export function ProblemRefiner() {
       apiEndpoint="/api/tools/refine-problem/generate"
       inputLabel="Your Problem Statement"
       templates={[
-        { icon: "🏥", title: "Healthcare", description: "Patients struggle to manage appointments across multiple providers...", idea: "Patients with chronic conditions struggle to manage appointments, medications, and test results across multiple healthcare providers, leading to missed doses and conflicting treatments" },
-        { icon: "🎓", title: "Education", description: "Online students feel isolated and lack engagement compared to...", idea: "Online university students feel isolated and lack the peer-to-peer engagement that in-person classes provide, leading to higher dropout rates and lower course satisfaction" },
+        { icon: "🚗", title: "Urban Mobility", description: "Commuters in mid-size cities lack reliable last-mile transit options connecting them...", idea: "Commuters in mid-size cities lack reliable last-mile transit options connecting suburban neighborhoods to public transit hubs, resulting in car dependency, traffic congestion, and inequitable access to employment" },
+        { icon: "👵", title: "Elder Care", description: "Adult children of aging parents struggle to coordinate caregiving responsibilities...", idea: "Adult children of aging parents living in different cities struggle to coordinate caregiving responsibilities, track medications, monitor health changes, and communicate with multiple healthcare providers simultaneously" },
       ]}
       inspirations={[
-        "Small business owners spend too much time on bookkeeping and invoicing instead of growing their business",
-        "Remote workers find it hard to maintain work-life balance without physical separation between office and home",
-        "First-time homebuyers are overwhelmed by the mortgage process and often make uninformed decisions",
+        "Freelancers waste hours each week switching between invoicing, contracts, time tracking, and client communication tools",
+        "College students moving to new cities struggle to find safe, affordable short-term housing without getting scammed",
+        "Small restaurant owners can't compete with delivery apps that charge 30% commissions and own the customer relationship",
       ]}
     />
   );
@@ -77,13 +77,13 @@ export function FeaturePrioritizer() {
       apiEndpoint="/api/tools/prioritize-features/generate"
       inputLabel="Your Feature List"
       templates={[
-        { icon: "📊", title: "Analytics Platform", description: "Custom dashboards, real-time alerts, data export, API access...", idea: "Custom dashboards, real-time email alerts, CSV/PDF data export, REST API access, team collaboration tools, white-label branding, SSO integration" },
-        { icon: "🎯", title: "Marketing Tool", description: "Email campaigns, A/B testing, landing pages, CRM integration...", idea: "Email campaign builder, A/B testing for subject lines, drag-and-drop landing pages, CRM integration, social media scheduling, analytics dashboard" },
+        { icon: "🎵", title: "Music Collaboration", description: "Real-time jam sessions, sample library, beat marketplace, lyrics wiki...", idea: "Real-time remote jam sessions with low-latency audio, shared sample library, beat and loop marketplace, collaborative lyrics editor, AI mastering, fan voting on unreleased tracks" },
+        { icon: "📚", title: "Learning Platform", description: "Spaced repetition, peer tutoring, skill trees, portfolio builder...", idea: "Spaced repetition flashcards, peer tutoring video calls, visual skill trees with badges, portfolio builder from completed projects, employer partnership job board, group study rooms" },
       ]}
       inspirations={[
-        "Dark mode, push notifications, social sharing, in-app payments, user profiles, search functionality",
-        "Two-factor auth, activity feed, file attachments, calendar integration, mobile app, offline mode",
-        "Reporting dashboard, team workspaces, API webhooks, custom branding, audit logs, bulk import",
+        "Voice commands, collaborative playlists, podcast transcripts, offline mode, social listening activity, concert alerts",
+        "AI writing assistant, version control for documents, real-time co-editing, template marketplace, analytics dashboard",
+        "Geofenced notifications, AR navigation, loyalty programs, reservation system, crowd density indicators, accessibility mode",
       ]}
     />
   );
@@ -99,13 +99,13 @@ export function SprintPlanner() {
       apiEndpoint="/api/tools/plan-sprint/generate"
       inputLabel="Your Backlog Items"
       templates={[
-        { icon: "🚀", title: "MVP Launch", description: "Core features for first release: auth, main flow, basic admin...", idea: "User registration and login, core product workflow (create, edit, delete), basic admin panel, payment integration, email notifications, landing page" },
-        { icon: "🔧", title: "Tech Debt Sprint", description: "Database optimization, test coverage, dependency updates...", idea: "Migrate database to new schema, increase test coverage to 80%, update all deprecated dependencies, refactor authentication module, set up monitoring and alerting" },
+        { icon: "🔐", title: "Security Hardening", description: "OAuth2 implementation, rate limiting, input sanitization, audit logging...", idea: "Implement OAuth2 with PKCE flow, add rate limiting to all API endpoints, sanitize all user inputs against XSS/SQL injection, set up comprehensive audit logging, enable 2FA for admin accounts, configure CORS policies" },
+        { icon: "🌍", title: "Internationalization", description: "Multi-language support, RTL layouts, currency conversion, timezone handling...", idea: "Add i18n framework with string extraction, implement RTL layout support for Arabic/Hebrew, integrate currency conversion API, add timezone-aware scheduling, localize email templates, set up translation management workflow" },
       ]}
       inspirations={[
-        "Implement user login, build dashboard, set up CI/CD pipeline, create API documentation, add error monitoring",
-        "Design system setup, component library, accessibility audit, performance optimization, documentation site",
-        "Payment flow redesign, subscription management, invoice generation, refund handling, billing history",
+        "Build recommendation engine, implement A/B testing framework, migrate to microservices, add GraphQL layer, set up feature flags",
+        "Design system migration, accessibility WCAG 2.1 audit, performance budget enforcement, mobile responsive overhaul, dark mode support",
+        "Real-time notifications via WebSocket, email digest system, in-app messaging, push notification service, notification preferences panel",
       ]}
     />
   );
@@ -121,13 +121,13 @@ export function InterviewPrep() {
       apiEndpoint="/api/tools/interview-prep/generate"
       inputLabel="Product Domain or Topic"
       templates={[
-        { icon: "🏦", title: "Fintech", description: "Mobile banking, payments, lending, and investment platforms...", idea: "Consumer fintech app for millennials that combines budgeting, investing, and peer-to-peer payments in one platform" },
-        { icon: "🏠", title: "Marketplace", description: "Two-sided marketplaces, matching algorithms, trust and safety...", idea: "Two-sided marketplace for home services connecting homeowners with vetted local contractors for renovation projects" },
+        { icon: "🤖", title: "AI/ML Products", description: "Conversational AI, recommendation systems, computer vision, and autonomous tech...", idea: "AI-powered customer service platform that uses NLP to handle support tickets, routes complex issues to humans, and continuously learns from resolved cases to improve accuracy" },
+        { icon: "🏥", title: "Digital Health", description: "Telemedicine, patient engagement, clinical trials, mental wellness platforms...", idea: "Digital health platform that connects patients with specialists via video consultations, manages prescriptions, integrates with wearable health monitors, and provides AI-driven symptom assessment" },
       ]}
       inspirations={[
-        "B2B SaaS product for enterprise resource planning in manufacturing",
-        "Consumer health and wellness app with wearable device integration",
-        "Social media platform focused on professional networking for creative industries",
+        "Autonomous vehicle ride-sharing service for suburban and rural communities",
+        "Creator economy platform helping YouTubers monetize through courses, merch, and community memberships",
+        "Climate tech startup building carbon credit verification using satellite imagery and blockchain",
       ]}
     />
   );
