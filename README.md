@@ -6,6 +6,9 @@ ScopeCreep is a full-stack AI-powered Product Management toolkit that transforms
 
 ---
 
+## **DEMO**
+
+
 ## Features
 
 ScopeCreep includes **6 specialized AI tools** for product managers:
