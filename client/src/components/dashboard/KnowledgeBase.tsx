@@ -1,7 +1,8 @@
-import { Upload, FileType, CheckCircle2, X } from "lucide-react";
+import { Upload, FileType, CheckCircle2, X, ArrowRight, BrainCircuit } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export function KnowledgeBase() {
   const [files, setFiles] = useState([
@@ -83,6 +84,14 @@ export function KnowledgeBase() {
             </motion.div>
           ))}
         </AnimatePresence>
+      </div>
+
+      <div className="mt-6 pt-6 border-t border-border/50">
+        <Button className="w-full gap-2 bg-primary text-primary-foreground hover:bg-primary/90 font-medium">
+          <BrainCircuit size={16} />
+          <span>Synthesize & Create Draft</span>
+          <ArrowRight size={16} className="ml-auto opacity-70" />
+        </Button>
       </div>
     </div>
   );

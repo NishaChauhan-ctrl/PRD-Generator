@@ -1,9 +1,12 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { EditorSection } from "./EditorSection";
 import { Button } from "@/components/ui/button";
-import { Play, Share2, Save } from "lucide-react";
+import { Play, Share2, Save, Sparkles, CheckCheck } from "lucide-react";
+import { useState } from "react";
 
 export function Draftboard() {
+  const [activeTab, setActiveTab] = useState("draft");
+
   return (
     <div className="h-full flex flex-col space-y-4">
       <div className="flex items-center justify-between">
@@ -23,7 +26,7 @@ export function Draftboard() {
         </div>
       </div>
 
-      <Tabs defaultValue="draft" className="flex-1 flex flex-col">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
         <div className="flex items-center justify-between border-b border-border/50 mb-4">
           <TabsList className="bg-transparent h-auto p-0 gap-6">
             <TabsTrigger 
@@ -39,6 +42,16 @@ export function Draftboard() {
               AI Critique
             </TabsTrigger>
           </TabsList>
+          
+          <Button 
+            size="sm" 
+            variant="ghost" 
+            className="h-8 gap-2 text-accent hover:bg-accent/10 hover:text-accent font-medium border border-accent/20"
+            onClick={() => setActiveTab("critique")}
+          >
+            <CheckCheck size={14} />
+            Run Validation Agent
+          </Button>
         </div>
 
         <TabsContent value="draft" className="flex-1 overflow-auto pr-2 pb-10 space-y-6 mt-0">
@@ -61,12 +74,21 @@ export function Draftboard() {
           </div>
         </TabsContent>
 
-        <TabsContent value="critique" className="mt-0 h-full flex items-center justify-center text-muted-foreground">
-           <div className="text-center space-y-2">
-             <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-               <BotIcon className="opacity-50" />
+        <TabsContent value="critique" className="mt-0 h-full flex flex-col">
+           <div className="flex-1 flex items-center justify-center text-muted-foreground">
+             <div className="text-center space-y-4 max-w-md mx-auto p-8 rounded-lg border border-dashed border-border/50 bg-muted/10">
+               <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto text-accent">
+                 <BotIcon className="w-8 h-8" />
+               </div>
+               <div className="space-y-2">
+                <h3 className="text-foreground font-medium text-lg">Critique Agent Ready</h3>
+                <p className="text-sm">The "Senior PM Agent" checks your PRD for logic gaps, vague metrics, and missing requirements.</p>
+               </div>
+               <Button className="w-full gap-2 bg-accent text-accent-foreground hover:bg-accent/90">
+                 <Sparkles size={16} />
+                 Analyze Draft Logic
+               </Button>
              </div>
-             <p>Critique Agent is awaiting draft completion...</p>
            </div>
         </TabsContent>
       </Tabs>
