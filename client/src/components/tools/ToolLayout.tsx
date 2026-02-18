@@ -4,20 +4,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { 
   Sparkles, Loader2, Copy, Check, AlertCircle, Upload, Lightbulb,
   FileDown, Pencil, Link2, LayoutTemplate, CheckCircle2, ArrowRight, FileText, X,
-  RefreshCw, Plus
+  RefreshCw
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-
-interface Template {
-  icon: string;
-  title: string;
-  description: string;
-  idea: string;
-}
 
 interface ToolLayoutProps {
   title: string;
@@ -27,7 +20,6 @@ interface ToolLayoutProps {
   apiEndpoint: string;
   isPrd?: boolean;
   inputLabel?: string;
-  templates?: Template[];
   inspirations?: string[];
   resultsLabel?: string;
   resultsHref?: string;
@@ -42,7 +34,6 @@ export function ToolLayout({
   apiEndpoint,
   isPrd = false,
   inputLabel = "Your Input",
-  templates = [],
   inspirations = [],
   resultsLabel,
   resultsHref,
@@ -191,39 +182,6 @@ export function ToolLayout({
 
   return (
     <div className="max-w-4xl mx-auto p-8 space-y-8 overflow-auto">
-      {templates.length > 0 && (
-        <div>
-          <h2 className="text-lg font-heading font-semibold mb-4 text-center">Start with a Template</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {templates.map((tpl, i) => (
-              <button
-                key={i}
-                data-testid={`button-template-${i}`}
-                onClick={() => setInput(tpl.idea)}
-                className="flex items-start gap-3 p-4 rounded-xl border border-border bg-card hover:border-primary/50 hover:shadow-md transition-all text-left group"
-              >
-                <span className="text-2xl mt-0.5">{tpl.icon}</span>
-                <div className="min-w-0">
-                  <p className="font-semibold text-sm">{tpl.title}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{tpl.description}</p>
-                </div>
-              </button>
-            ))}
-            <button
-              data-testid="button-template-custom"
-              onClick={() => {
-                const textarea = document.querySelector<HTMLTextAreaElement>('[data-testid="input-tool-text"]');
-                if (textarea) { textarea.focus(); }
-              }}
-              className="flex items-center justify-center gap-2 p-4 rounded-xl border border-dashed border-border bg-card/50 hover:border-primary/50 hover:bg-card transition-all text-sm text-muted-foreground hover:text-foreground"
-            >
-              <Plus size={16} />
-              <span>Create Your Own</span>
-            </button>
-          </div>
-        </div>
-      )}
-
       <div className="space-y-4">
         <div className="flex items-start gap-3">
           <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0 mt-0.5">
