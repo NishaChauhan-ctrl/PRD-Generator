@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { 
   Sparkles, Loader2, Copy, Check, AlertCircle, Upload, Lightbulb,
-  FileDown, Pencil, Link2, LayoutTemplate, CheckCircle2, ArrowRight, FileText, X
+  FileDown, Pencil, Link2, LayoutTemplate, CheckCircle2, ArrowRight, FileText, X,
+  RefreshCw, Plus
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { apiRequest } from "@/lib/queryClient";
@@ -156,6 +157,17 @@ export function ToolLayout({
               {copied ? "Copied" : "Copy"}
             </Button>
             <Button
+              data-testid="button-regenerate"
+              variant="outline"
+              size="sm"
+              onClick={() => { setResult(""); setTimeout(() => handleGenerate(), 100); }}
+              disabled={isGenerating}
+              className="gap-2"
+            >
+              {isGenerating ? <Loader2 size={14} className="animate-spin" /> : <RefreshCw size={14} />}
+              Regenerate
+            </Button>
+            <Button
               data-testid="button-new"
               variant="outline"
               size="sm"
@@ -197,6 +209,17 @@ export function ToolLayout({
                 </div>
               </button>
             ))}
+            <button
+              data-testid="button-template-custom"
+              onClick={() => {
+                const textarea = document.querySelector<HTMLTextAreaElement>('[data-testid="input-tool-text"]');
+                if (textarea) { textarea.focus(); }
+              }}
+              className="flex items-center justify-center gap-2 p-4 rounded-xl border border-dashed border-border bg-card/50 hover:border-primary/50 hover:bg-card transition-all text-sm text-muted-foreground hover:text-foreground"
+            >
+              <Plus size={16} />
+              <span>Create Your Own</span>
+            </button>
           </div>
         </div>
       )}

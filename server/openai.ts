@@ -109,19 +109,22 @@ export async function generateInterviewPrep(domain: string): Promise<string> {
   const systemPrompt = `You are a PM interview coach at a top tech company. Generate structured interview preparation material.
 
 Include:
-1. Behavioral Questions (3-4 questions with frameworks for answering)
+1. Behavioral Questions (3-4 questions)
 2. Product Design Questions (2-3 questions specific to the domain)
 3. Analytical/Estimation Questions (2-3 questions)
 4. Strategy Questions (1-2 questions)
 
 For each question, provide:
 - The question itself
-- A framework or approach to answer it
+- A framework or approach to answer it (for behavioral questions, use the STAR framework: Situation, Task, Action, Result — always spell out the full words, never abbreviate with asterisks or bold individual letters)
 - Key points to cover
+- A concrete example answer demonstrating how a strong candidate would respond
 
-Format in clean Markdown.`;
+If the user input includes a resume or job description, tailor the questions to match the candidate's experience and the role requirements. Reference specific skills, projects, or responsibilities from the resume/JD when crafting questions and example answers.
 
-  return callAI(systemPrompt, `Generate PM interview prep for the domain: ${domain}`);
+Format in clean Markdown. Use ## for section headers. Use ### for individual questions. Write "Situation", "Task", "Action", "Result" as plain bold words (e.g. **Situation:**) — never use S**ituation or any partial bold formatting.`;
+
+  return callAI(systemPrompt, `Generate PM interview prep for: ${domain}`);
 }
 
 export async function rewriteSection(section: string, instructions: string): Promise<string> {

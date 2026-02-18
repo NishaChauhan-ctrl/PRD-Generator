@@ -8,6 +8,7 @@ import {
   SprintPlanner, 
   InterviewPrep 
 } from "@/pages/Tools";
+import ToolResultsHistory from "@/pages/ToolResultsHistory";
 import { Switch, Route } from "wouter";
 
 export default function AppLayout() {
@@ -26,6 +27,7 @@ export default function AppLayout() {
           <Route path="/tools/prioritizer" component={FeaturePrioritizer} />
           <Route path="/tools/sprint-planner" component={SprintPlanner} />
           <Route path="/tools/interview-prep" component={InterviewPrep} />
+          <Route path="/library/results" component={ToolResultsHistory} />
           <Route path="/:rest*" component={HomePage} />
         </Switch>
       </main>

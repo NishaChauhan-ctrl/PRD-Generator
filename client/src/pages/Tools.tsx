@@ -115,11 +115,11 @@ export function InterviewPrep() {
   return (
     <ToolLayout 
       title="Prepare for PM Interviews"
-      description="Practice with AI-generated PM interview questions and structured model answers for your domain."
-      placeholder="Enter the product domain or specific question you want to practice (e.g., 'E-commerce marketplace for handmade goods')..."
+      description="Practice with AI-generated PM interview questions, STAR-format answers, and real examples. Upload your resume or paste a job description to get tailored questions."
+      placeholder="Enter a product domain, paste a job description, or describe the role you're preparing for. You can also upload your resume using the Upload Doc button to get personalized questions."
       actionLabel="Get Questions"
       apiEndpoint="/api/tools/interview-prep/generate"
-      inputLabel="Product Domain or Topic"
+      inputLabel="Product Domain, Job Description, or Resume"
       templates={[
         { icon: "🤖", title: "AI/ML Products", description: "Conversational AI, recommendation systems, computer vision, and autonomous tech...", idea: "AI-powered customer service platform that uses NLP to handle support tickets, routes complex issues to humans, and continuously learns from resolved cases to improve accuracy" },
         { icon: "🏥", title: "Digital Health", description: "Telemedicine, patient engagement, clinical trials, mental wellness platforms...", idea: "Digital health platform that connects patients with specialists via video consultations, manages prescriptions, integrates with wearable health monitors, and provides AI-driven symptom assessment" },
