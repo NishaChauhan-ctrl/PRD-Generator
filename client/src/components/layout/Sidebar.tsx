@@ -12,7 +12,6 @@ import {
   Sun,
   Moon,
   ClipboardList,
-  LayoutTemplate,
   Info,
   X,
   Sparkles,
@@ -214,13 +213,6 @@ export function Sidebar() {
             )}>
               <ClipboardList size={16} className="text-sidebar-foreground/40" />
               <span>Tool Results</span>
-            </Link>
-            <Link href="/library/templates" className={cn(
-              "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all duration-200 text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
-              location === "/library/templates" && "bg-sidebar-accent text-sidebar-primary font-medium"
-            )}>
-              <LayoutTemplate size={16} className="text-sidebar-foreground/40" />
-              <span>Templates</span>
             </Link>
           </div>
         </div>
