@@ -226,6 +226,41 @@ export async function registerRoutes(
     res.json({ shareId });
   });
 
+  // --- Stats ---
+  app.get("/api/stats", async (_req, res) => {
+    try {
+      const { db: database } = await import("./db");
+      const { sql } = await import("drizzle-orm");
+
+      const prdCountResult = await database.execute(sql`SELECT COUNT(*)::int as count FROM prds`);
+      const prdCount = prdCountResult.rows?.[0]?.count ?? 0;
+
+      const toolCountsResult = await database.execute(
+        sql`SELECT tool_type, COUNT(*)::int as count FROM tool_results GROUP BY tool_type`
+      );
+
+      const toolCounts: Record<string, number> = {
+        "prd": Number(prdCount),
+        "user-stories": 0,
+        "refine-problem": 0,
+        "prioritize-features": 0,
+        "plan-sprint": 0,
+        "interview-prep": 0,
+      };
+
+      for (const row of (toolCountsResult.rows || [])) {
+        toolCounts[row.tool_type as string] = Number(row.count);
+      }
+
+      const totalGenerations = Object.values(toolCounts).reduce((a, b) => a + b, 0);
+
+      res.json({ totalGenerations, toolCounts });
+    } catch (err: any) {
+      console.error("Stats error:", err);
+      res.status(500).json({ error: "Failed to fetch stats" });
+    }
+  });
+
   // --- Templates ---
   app.get("/api/templates", async (_req, res) => {
     const allTemplates = await storage.getAllTemplates();
