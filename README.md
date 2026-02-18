@@ -161,6 +161,17 @@ npm start
 | `POST` | `/api/templates` | Create a template |
 
 ---
+<img width="1454" height="782" alt="Screenshot 2026-02-17 at 9 29 09 PM" src="https://github.com/user-attachments/assets/926fc5e6-fb7b-46db-9955-d9e623762a3b" />
+<img width="1424" height="782" alt="Screenshot 2026-02-17 at 9 29 24 PM" src="https://github.com/user-attachments/assets/f93fd4dc-00a4-4908-8869-a47e9b17c8a1" />
+<img width="1400" height="644" alt="Screenshot 2026-02-17 at 9 33 47 PM" src="https://github.com/user-attachments/assets/4610f72e-e2d8-4285-bd66-75ae22884226" />
+<img width="1413" height="670" alt="Screenshot 2026-02-17 at 9 33 59 PM" src="https://github.com/user-attachments/assets/572c0d5f-6256-4938-90d1-30635308e258" />
+<img width="1381" height="734" alt="Screenshot 2026-02-17 at 9 34 46 PM" src="https://github.com/user-attachments/assets/93ff2e56-6d58-46e7-adce-d94a98bdc17c" />
+<img width="1323" height="778" alt="Screenshot 2026-02-17 at 9 35 08 PM" src="https://github.com/user-attachments/assets/c4c58a80-5257-4896-8ba6-2175c9e0ee17" />
+
+
+
+
+
 
 ## License
 
